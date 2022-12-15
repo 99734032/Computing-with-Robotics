@@ -1,0 +1,93 @@
+int echoPin = 12;
+int trigPin = 13;
+
+int motorfrontRighta = 0;
+int motorfrontRightb = 1;
+int speedfrontRight = 2;
+
+int motorfrontLefta = 3;
+int motorfrontLeftb = 4;
+int speedfrontLeft = 5;
+
+int motorbackLefta = 6;
+int motorbackLeftb = 7;
+int speedbackLeft = 8;
+
+int motorbackRighta = 9;
+int motorbackRightb = 10;
+int speedbackRight = 11;
+
+float duration = 0.0; 
+float distance = 0.0;
+bool brake = false;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(motorfrontRighta, OUTPUT);
+  pinMode(motorfrontRightb, OUTPUT);
+  pinMode(speedfrontRight, OUTPUT);
+
+  pinMode(motorfrontLefta, OUTPUT);
+  pinMode(motorfrontLeftb, OUTPUT);
+  pinMode(speedfrontLeft, OUTPUT);
+
+  pinMode(motorbackLefta, OUTPUT);
+  pinMode(motorbackLeftb, OUTPUT);
+  pinMode(speedbackLeft, OUTPUT);
+
+  pinMode(motorbackRighta, OUTPUT);
+  pinMode(motorbackRightb, OUTPUT);
+  pinMode(speedbackRight, OUTPUT);
+  
+}
+
+void loop(){
+  
+digitalWrite(trigPin, LOW); 
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration / 2) * 0.0344;
+ 
+
+  if (distance < 3) {
+  //left Pair
+  analogWrite(speedbackLeft, 255);
+  digitalWrite(motorbackLefta, LOW);
+  digitalWrite(motorbackLeftb, HIGH);
+  //right pair
+  analogWrite(speedbackRight, 255);
+  digitalWrite(motorbackRighta, HIGH);
+  digitalWrite(motorbackRightb, LOW);
+  //right pair
+  analogWrite(speedfrontRight, 255);
+  digitalWrite(motorfrontRighta, HIGH);
+  digitalWrite(motorfrontRightb, LOW);
+  //left pair
+  analogWrite(speedfrontLeft, 255);
+  digitalWrite(motorfrontLefta, HIGH);
+  digitalWrite(motorfrontLeftb, LOW);
+  delay(5000);
+  }
+  else {
+    analogWrite(speedbackLeft, 255);
+  digitalWrite(motorbackLefta, HIGH);
+  digitalWrite(motorbackLeftb, LOW);
+
+  analogWrite(speedbackRight, 255);
+  digitalWrite(motorbackRighta, HIGH);
+  digitalWrite(motorbackRightb, LOW);
+
+  analogWrite(speedfrontRight, 255);
+  digitalWrite(motorfrontRighta, LOW);
+  digitalWrite(motorfrontRightb, HIGH);
+
+  analogWrite(speedfrontLeft, 255);
+  digitalWrite(motorfrontLefta, HIGH);
+  digitalWrite(motorfrontLeftb, LOW);
+  }
+}
+
